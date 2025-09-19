@@ -8,7 +8,8 @@ import {
   faEdit, 
   faEnvelope,
   faSignInAlt,
-  faChevronDown
+  faChevronDown,
+  faChartLine
 } from '@fortawesome/free-solid-svg-icons';
 import useAuthStore from '../store/authStore';
 
@@ -139,6 +140,18 @@ const UserMenu = () => {
                             <FontAwesomeIcon icon={faEdit} className="text-glamGold" />
                             <span className="font-cormorant">Create Event</span>
                         </Link>
+
+                        {/* Admin Dashboard Link - Show only for admin users */}
+                        {user?.role === 'admin' && (
+                            <Link 
+                                to="/admin/dashboard" 
+                                className="flex items-center space-x-3 px-3 py-2 text-glamDarkBrown hover:bg-glamGold/10 rounded-md transition-colors"
+                                onClick={() => setIsOpen(false)}
+                            >
+                                <FontAwesomeIcon icon={faChartLine} className="text-glamGold" />
+                                <span className="font-cormorant">Admin Dashboard</span>
+                            </Link>
+                        )}
 
                         {!user?.isVerified && (
                             <Link 

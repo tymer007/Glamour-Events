@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import './index.css'
 import Home from './pages/Home.jsx'
 import { SignUp, SignIn, EmailVerification, UserProfile, EventCreation, EventReview } from './pages/forms'
+import AdminDashboard from './pages/AdminDashboard.jsx'
 import ProtectedRoute from './components/ProtectedRoute'
 import { ToastProvider } from './contexts/ToastContext'
 import ToastContainer from './components/ToastContainer'
@@ -41,6 +42,14 @@ createRoot(document.getElementById('root')).render(
             element={
               <ProtectedRoute>
                 <EventReview />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/admin/dashboard" 
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
               </ProtectedRoute>
             } 
           />

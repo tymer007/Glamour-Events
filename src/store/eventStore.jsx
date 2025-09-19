@@ -252,6 +252,34 @@ const useEventStore = create((set, get) => ({
       return { success: false, error: 'Network error. Please try again.' };
     }
   },
+
+  // Get Admin Dashboard Data
+  getAdminData: async (accessToken) => {
+    set({ isLoading: true, error: null });
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/admin/data`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        set({ isLoading: false, error: null });
+        return { success: true, data: data.data };
+      } else {
+        set({ error: data.message || 'Failed to fetch admin data', isLoading: false });
+        return { success: false, error: data.message || 'Failed to fetch admin data' };
+      }
+    } catch (error) {
+      set({ error: 'Network error. Please try again.', isLoading: false });
+      return { success: false, error: 'Network error. Please try again.' };
+    }
+  },
 }));
 
 export default useEventStore;
