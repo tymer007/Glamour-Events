@@ -5,6 +5,8 @@ import './index.css'
 import Home from './pages/Home.jsx'
 import { SignUp, SignIn, EmailVerification, UserProfile, EventCreation, EventReview } from './pages/forms'
 import AdminDashboard from './pages/AdminDashboard.jsx'
+import EventStats from './pages/EventStats.jsx'
+import UpcomingEvent from './pages/UpcomingEvent.jsx'
 import ProtectedRoute from './components/ProtectedRoute'
 import { ToastProvider } from './contexts/ToastContext'
 import ToastContainer from './components/ToastContainer'
@@ -52,6 +54,14 @@ createRoot(document.getElementById('root')).render(
                 <AdminDashboard />
               </ProtectedRoute>
             } 
+          />
+          <Route 
+            path="/events/:eventId/stats" 
+            element={<EventStats />} 
+          />
+          <Route 
+            path="/events/:eventId" 
+            element={<UpcomingEvent />} 
           />
           
           {/* Catch all route - redirect to home */}

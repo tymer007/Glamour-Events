@@ -9,7 +9,8 @@ import {
   faEdit,
   faClock,
   faCalendarPlus,
-  faHistory
+  faHistory,
+  faChartBar
 } from '@fortawesome/free-solid-svg-icons';
 
 // Empty State Component for when no events are available
@@ -204,33 +205,48 @@ const EventCard = ({
           {buttonText}
         </button>
 
-        {/* Secondary Action Button */}
-        {isUpcoming ? (
-          <button 
-            onClick={() => {
-              // RSVP functionality - you can implement this later
-              console.log('RSVP clicked for event:', eventId);
-              // For now, just show an alert
-              alert('RSVP functionality coming soon!');
-            }}
-            className="bg-glamCream hover:bg-glamGold/20 text-glamDarkBrown font-cormorant font-medium py-2 px-4 rounded-full transition-colors duration-300 border border-glamGold/30 hover:border-glamGold w-full flex items-center justify-center space-x-2"
-          >
-            <FontAwesomeIcon icon={faUserPlus} className="text-sm" />
-            <span>RSVP</span>
-          </button>
-        ) : (
+        {/* Secondary Action Buttons */}
+        <div className="grid grid-cols-2 gap-2">
+          {isUpcoming ? (
+            <button 
+              onClick={() => {
+                // RSVP functionality - you can implement this later
+                console.log('RSVP clicked for event:', eventId);
+                // For now, just show an alert
+                alert('RSVP functionality coming soon!');
+              }}
+              className="bg-glamCream hover:bg-glamGold/20 text-glamDarkBrown font-cormorant font-medium py-2 px-3 rounded-full transition-colors duration-300 border border-glamGold/30 hover:border-glamGold flex items-center justify-center space-x-1 text-xs"
+            >
+              <FontAwesomeIcon icon={faUserPlus} className="text-xs" />
+              <span>RSVP</span>
+            </button>
+          ) : (
+            <button 
+              onClick={() => {
+                if (eventId) {
+                  navigate(`/events/${eventId}/review`);
+                }
+              }}
+              className="bg-glamCream hover:bg-glamGold/20 text-glamDarkBrown font-cormorant font-medium py-2 px-3 rounded-full transition-colors duration-300 border border-glamGold/30 hover:border-glamGold flex items-center justify-center space-x-1 text-xs"
+            >
+              <FontAwesomeIcon icon={faEdit} className="text-xs" />
+              <span>Review</span>
+            </button>
+          )}
+          
+          {/* View Stats Button */}
           <button 
             onClick={() => {
               if (eventId) {
-                navigate(`/events/${eventId}/review`);
+                navigate(`/events/${eventId}/stats`);
               }
             }}
-            className="bg-glamCream hover:bg-glamGold/20 text-glamDarkBrown font-cormorant font-medium py-2 px-4 rounded-full transition-colors duration-300 border border-glamGold/30 hover:border-glamGold w-full flex items-center justify-center space-x-2"
+            className="bg-glamCream hover:bg-glamGold/20 text-glamDarkBrown font-cormorant font-medium py-2 px-3 rounded-full transition-colors duration-300 border border-glamGold/30 hover:border-glamGold flex items-center justify-center space-x-1 text-xs"
           >
-            <FontAwesomeIcon icon={faEdit} className="text-sm" />
-            <span>Write Review</span>
+            <FontAwesomeIcon icon={faChartBar} className="text-xs" />
+            <span>Stats</span>
           </button>
-        )}
+        </div>
 
         {/* Event Status Indicator */}
         <div className="flex items-center justify-center space-x-2 text-sm font-cormorant">

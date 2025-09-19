@@ -281,6 +281,60 @@ const useEventStore = create((set, get) => ({
       return { success: false, error: 'Network error. Please try again.' };
     }
   },
+
+  // Get Event Analytics
+  getEventAnalytics: async (eventId) => {
+    set({ isLoading: true, error: null });
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/events/${eventId}/analytics`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        set({ isLoading: false, error: null });
+        return { success: true, data: data.data };
+      } else {
+        set({ error: data.message || 'Failed to fetch event analytics', isLoading: false });
+        return { success: false, error: data.message || 'Failed to fetch event analytics' };
+      }
+    } catch (error) {
+      set({ error: 'Network error. Please try again.', isLoading: false });
+      return { success: false, error: 'Network error. Please try again.' };
+    }
+  },
+
+  // Get Admin Event (detailed event info)
+  getAdminEvent: async (eventId) => {
+    set({ isLoading: true, error: null });
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/admin/events/${eventId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        set({ isLoading: false, error: null });
+        return { success: true, data: data.data };
+      } else {
+        set({ error: data.message || 'Failed to fetch admin event', isLoading: false });
+        return { success: false, error: data.message || 'Failed to fetch admin event' };
+      }
+    } catch (error) {
+      set({ error: 'Network error. Please try again.', isLoading: false });
+      return { success: false, error: 'Network error. Please try again.' };
+    }
+  },
 }));
 
 export default useEventStore;
