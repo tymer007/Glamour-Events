@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -46,6 +46,13 @@ const UserMenu = () => {
         setIsOpen(false);
         navigate('/');
     };
+
+    // Navigate admin users to dashboard on login
+    React.useEffect(() => {
+        if (isAuthenticated && user?.role === 'admin') {
+            navigate('/admin/dashboard');
+        }
+    }, [isAuthenticated, user?.role, navigate]);
 
     if (!isAuthenticated) {
         return (
@@ -131,15 +138,18 @@ const UserMenu = () => {
                             <FontAwesomeIcon icon={faUser} className="text-glamGold" />
                             <span className="font-cormorant">My Profile</span>
                         </Link>
-                        
-                        <Link 
-                            to="/create-event" 
-                            className="flex items-center space-x-3 px-3 py-2 text-glamDarkBrown hover:bg-glamGold/10 rounded-md transition-colors"
-                            onClick={() => setIsOpen(false)}
-                        >
-                            <FontAwesomeIcon icon={faEdit} className="text-glamGold" />
-                            <span className="font-cormorant">Create Event</span>
-                        </Link>
+
+                        {/* Create Event Link - Show only for admin users */}
+                        {user?.role === 'admin' && (
+                            <Link 
+                                to="/create-event" 
+                                className="flex items-center space-x-3 px-3 py-2 text-glamDarkBrown hover:bg-glamGold/10 rounded-md transition-colors"
+                                onClick={() => setIsOpen(false)}
+                            >
+                                <FontAwesomeIcon icon={faEdit} className="text-glamGold" />
+                                <span className="font-cormorant">Create Event</span>
+                            </Link>
+                        )}
 
                         {/* Admin Dashboard Link - Show only for admin users */}
                         {user?.role === 'admin' && (

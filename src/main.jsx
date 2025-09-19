@@ -8,6 +8,7 @@ import AdminDashboard from './pages/AdminDashboard.jsx'
 import EventStats from './pages/EventStats.jsx'
 import UpcomingEvent from './pages/UpcomingEvent.jsx'
 import ProtectedRoute from './components/ProtectedRoute'
+import AdminRoute from './components/AdminRoute'
 import { ToastProvider } from './contexts/ToastContext'
 import ToastContainer from './components/ToastContainer'
 
@@ -50,9 +51,9 @@ createRoot(document.getElementById('root')).render(
           <Route 
             path="/admin/dashboard" 
             element={
-              <ProtectedRoute>
+              <AdminRoute>
                 <AdminDashboard />
-              </ProtectedRoute>
+              </AdminRoute>
             } 
           />
           <Route 

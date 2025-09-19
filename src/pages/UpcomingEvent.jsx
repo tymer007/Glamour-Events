@@ -14,7 +14,8 @@ import {
   faShare,
   faHeart,
   faEdit,
-  faChartBar
+  faChartBar,
+  faEye
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -80,7 +81,7 @@ const UpcomingEvent = () => {
           <FontAwesomeIcon 
             key={i} 
             icon={faStar} 
-            className={`text-yellow-400 ${size === 'lg' ? 'text-2xl' : 'text-sm'}`} 
+            className={`text-glamGold ${size === 'lg' ? 'text-2xl' : 'text-sm'}`} 
           />
         );
       } else if (i === fullStars && hasHalfStar) {
@@ -88,7 +89,7 @@ const UpcomingEvent = () => {
           <FontAwesomeIcon 
             key={i} 
             icon={faStar} 
-            className={`text-yellow-400 ${size === 'lg' ? 'text-2xl' : 'text-sm'} opacity-50`} 
+            className={`text-glamGold ${size === 'lg' ? 'text-2xl' : 'text-sm'} opacity-50`} 
           />
         );
       } else {
@@ -106,10 +107,10 @@ const UpcomingEvent = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-glamCream to-glamGold/20 flex items-center justify-center">
         <div className="text-center">
-          <FontAwesomeIcon icon={faSpinner} className="text-4xl text-purple-600 animate-spin mb-4" />
-          <p className="text-gray-600">Loading event details...</p>
+          <FontAwesomeIcon icon={faSpinner} className="text-4xl text-glamGold animate-spin mb-4" />
+          <p className="font-cormorant text-glamDarkBrown">Loading event details...</p>
         </div>
       </div>
     );
@@ -117,15 +118,15 @@ const UpcomingEvent = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-glamCream to-glamGold/20 flex items-center justify-center">
         <div className="text-center">
-          <div className="bg-white rounded-lg shadow-lg p-8 max-w-md">
+          <div className="bg-glamWhite rounded-xl shadow-xl p-8 max-w-md border border-glamGold/20">
             <div className="text-red-500 text-6xl mb-4">⚠️</div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Error Loading Event</h2>
-            <p className="text-gray-600 mb-6">{error}</p>
+            <h2 className="font-cormorant text-2xl font-bold text-glamDarkBrown mb-2">Error Loading Event</h2>
+            <p className="font-cormorant text-glamDarkBrown/70 mb-6">{error}</p>
             <button
               onClick={() => navigate(-1)}
-              className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+              className="bg-glamGold hover:bg-glamCreamDark text-glamDarkBrown font-cormorant font-semibold px-6 py-2 rounded-lg transition-colors"
             >
               Go Back
             </button>
@@ -137,15 +138,15 @@ const UpcomingEvent = () => {
 
   if (!event) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-glamCream to-glamGold/20 flex items-center justify-center">
         <div className="text-center">
-          <div className="bg-white rounded-lg shadow-lg p-8 max-w-md">
-            <div className="text-gray-500 text-6xl mb-4">📅</div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Event Not Found</h2>
-            <p className="text-gray-600 mb-6">The event you're looking for doesn't exist.</p>
+          <div className="bg-glamWhite rounded-xl shadow-xl p-8 max-w-md border border-glamGold/20">
+            <div className="text-glamGold text-6xl mb-4">📅</div>
+            <h2 className="font-cormorant text-2xl font-bold text-glamDarkBrown mb-2">Event Not Found</h2>
+            <p className="font-cormorant text-glamDarkBrown/70 mb-6">The event you're looking for doesn't exist.</p>
             <button
               onClick={() => navigate(-1)}
-              className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+              className="bg-glamGold hover:bg-glamCreamDark text-glamDarkBrown font-cormorant font-semibold px-6 py-2 rounded-lg transition-colors"
             >
               Go Back
             </button>
@@ -156,25 +157,32 @@ const UpcomingEvent = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
+    <div className="min-h-screen bg-gradient-to-br from-glamCream to-glamGold/20">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="bg-glamWhite shadow-sm border-b border-glamGold/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
               <button
                 onClick={() => navigate(-1)}
-                className="mr-4 p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                className="mr-4 p-2 rounded-lg hover:bg-glamGold/10 transition-colors"
               >
-                <FontAwesomeIcon icon={faArrowLeft} className="text-gray-600" />
+                <FontAwesomeIcon icon={faArrowLeft} className="text-glamDarkBrown" />
               </button>
-              <h1 className="text-2xl font-bold text-gray-900">Event Details</h1>
+              <h1 className="font-cormorant text-2xl font-bold text-glamDarkBrown">Event Details</h1>
             </div>
             <div className="flex items-center space-x-3">
-              <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+              <button 
+                onClick={() => navigate(`/events/${eventId}/stats`)}
+                className="p-2 text-glamDarkBrown/60 hover:text-glamGold hover:bg-glamGold/10 rounded-lg transition-colors"
+                title="View Analytics"
+              >
+                <FontAwesomeIcon icon={faChartBar} className="text-lg" />
+              </button>
+              <button className="p-2 text-glamDarkBrown/60 hover:text-glamGold hover:bg-glamGold/10 rounded-lg transition-colors">
                 <FontAwesomeIcon icon={faShare} className="text-lg" />
               </button>
-              <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+              <button className="p-2 text-glamDarkBrown/60 hover:text-glamGold hover:bg-glamGold/10 rounded-lg transition-colors">
                 <FontAwesomeIcon icon={faHeart} className="text-lg" />
               </button>
             </div>
@@ -184,7 +192,7 @@ const UpcomingEvent = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Event Hero Section */}
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+        <div className="bg-glamWhite rounded-xl shadow-lg overflow-hidden mb-8 border border-glamGold/20">
           {event.banner && (
             <div className="relative h-64 md:h-80">
               <img 
@@ -204,31 +212,31 @@ const UpcomingEvent = () => {
           <div className="p-6">
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
               <div className="flex-1">
-                <h1 className="text-4xl font-bold text-gray-900 mb-4">{event.title}</h1>
-                <p className="text-gray-600 text-lg mb-6 leading-relaxed">{event.description}</p>
+                <h1 className="font-cormorant text-4xl font-bold text-glamDarkBrown mb-4">{event.title}</h1>
+                <p className="font-cormorant text-glamDarkBrown/70 text-lg mb-6 leading-relaxed">{event.description}</p>
                 
-                <div className="flex flex-wrap gap-6 text-gray-600 mb-6">
+                <div className="flex flex-wrap gap-6 text-glamDarkBrown/70 mb-6">
                   <div className="flex items-center">
-                    <FontAwesomeIcon icon={faCalendarAlt} className="mr-2 text-purple-600" />
-                    <span className="font-medium">{formatDate(event.date)}</span>
+                    <FontAwesomeIcon icon={faCalendarAlt} className="mr-2 text-glamGold" />
+                    <span className="font-cormorant font-medium">{formatDate(event.date)}</span>
                   </div>
                   <div className="flex items-center">
-                    <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2 text-purple-600" />
-                    <span className="font-medium">{event.location}</span>
+                    <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2 text-glamGold" />
+                    <span className="font-cormorant font-medium">{event.location}</span>
                   </div>
                   <div className="flex items-center">
-                    <FontAwesomeIcon icon={faTag} className="mr-2 text-purple-600" />
-                    <span className="font-medium">{event.category}</span>
+                    <FontAwesomeIcon icon={faTag} className="mr-2 text-glamGold" />
+                    <span className="font-cormorant font-medium">{event.category}</span>
                   </div>
                 </div>
 
                 {/* Countdown Timer */}
-                <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-lg p-4 mb-6">
+                <div className="bg-gradient-to-r from-glamGold/10 to-glamCream/30 rounded-lg p-4 mb-6 border border-glamGold/20">
                   <div className="flex items-center">
-                    <FontAwesomeIcon icon={faClock} className="text-purple-600 mr-3 text-xl" />
+                    <FontAwesomeIcon icon={faClock} className="text-glamGold mr-3 text-xl" />
                     <div>
-                      <h3 className="font-semibold text-gray-900">Event Starts In</h3>
-                      <p className="text-purple-600 font-bold text-lg">{formatTimeUntil(event.date)}</p>
+                      <h3 className="font-cormorant font-semibold text-glamDarkBrown">Event Starts In</h3>
+                      <p className="font-cormorant text-glamGold font-bold text-lg">{formatTimeUntil(event.date)}</p>
                     </div>
                   </div>
                 </div>
@@ -236,12 +244,12 @@ const UpcomingEvent = () => {
 
               {/* Action Buttons */}
               <div className="lg:ml-8 space-y-4">
-                <button className="w-full bg-glamGold hover:bg-glamCreamDark text-glamDarkBrown font-semibold py-3 px-6 rounded-lg transition-colors shadow-md hover:shadow-lg flex items-center justify-center">
+                <button className="w-full bg-glamGold hover:bg-glamCreamDark text-glamDarkBrown font-cormorant font-semibold py-3 px-6 rounded-lg transition-colors shadow-md hover:shadow-lg flex items-center justify-center">
                   <FontAwesomeIcon icon={faUserPlus} className="mr-2" />
                   RSVP Now
                 </button>
                 
-                <button className="w-full bg-white border-2 border-glamGold text-glamGold hover:bg-glamGold hover:text-glamDarkBrown font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center">
+                <button className="w-full bg-glamWhite border-2 border-glamGold text-glamGold hover:bg-glamGold hover:text-glamDarkBrown font-cormorant font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center">
                   <FontAwesomeIcon icon={faShare} className="mr-2" />
                   Share Event
                 </button>
@@ -253,33 +261,33 @@ const UpcomingEvent = () => {
         {/* Event Stats */}
         {event.analytics && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+            <div className="bg-glamWhite rounded-xl shadow-lg p-6 text-center border border-glamGold/20">
               <div className="flex justify-center mb-3">
-                <FontAwesomeIcon icon={faUsers} className="text-3xl text-blue-600" />
+                <FontAwesomeIcon icon={faUsers} className="text-3xl text-glamGold" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-1">{event.analytics.totalReviews}</h3>
-              <p className="text-gray-600">Total Reviews</p>
+              <h3 className="text-2xl font-bold text-glamDarkBrown mb-1">{event.analytics.totalReviews}</h3>
+              <p className="font-cormorant text-glamDarkBrown/70">Total Reviews</p>
             </div>
             
-            <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+            <div className="bg-glamWhite rounded-xl shadow-lg p-6 text-center border border-glamGold/20">
               <div className="flex justify-center mb-3">
-                <FontAwesomeIcon icon={faStar} className="text-3xl text-yellow-500" />
+                <FontAwesomeIcon icon={faStar} className="text-3xl text-glamGold" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-1">{event.analytics.averageRating || 0}</h3>
-              <p className="text-gray-600">Average Rating</p>
+              <h3 className="text-2xl font-bold text-glamDarkBrown mb-1">{event.analytics.averageRating || 0}</h3>
+              <p className="font-cormorant text-glamDarkBrown/70">Average Rating</p>
               <div className="flex justify-center mt-2">
                 {renderStars(event.analytics.averageRating || 0)}
               </div>
             </div>
             
-            <div className="bg-white rounded-xl shadow-lg p-6 text-center">
+            <div className="bg-glamWhite rounded-xl shadow-lg p-6 text-center border border-glamGold/20">
               <div className="flex justify-center mb-3">
-                <FontAwesomeIcon icon={faChartBar} className="text-3xl text-green-600" />
+                <FontAwesomeIcon icon={faChartBar} className="text-3xl text-glamGold" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-1">
+              <h3 className="text-2xl font-bold text-glamDarkBrown mb-1">
                 {event.analytics.wouldRecommend || 0}
               </h3>
-              <p className="text-gray-600">Would Recommend</p>
+              <p className="font-cormorant text-glamDarkBrown/70">Would Recommend</p>
             </div>
           </div>
         )}
@@ -287,10 +295,10 @@ const UpcomingEvent = () => {
         {/* Event Details */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">About This Event</h2>
+            <div className="bg-glamWhite rounded-xl shadow-lg p-6 border border-glamGold/20">
+              <h2 className="font-cormorant text-2xl font-bold text-glamDarkBrown mb-4">About This Event</h2>
               <div className="prose max-w-none">
-                <p className="text-gray-600 leading-relaxed">
+                <p className="font-cormorant text-glamDarkBrown/70 leading-relaxed">
                   {event.description || 'No additional details available for this event.'}
                 </p>
               </div>
@@ -299,24 +307,24 @@ const UpcomingEvent = () => {
 
           <div className="space-y-6">
             {/* Event Info Card */}
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Event Information</h3>
+            <div className="bg-glamWhite rounded-xl shadow-lg p-6 border border-glamGold/20">
+              <h3 className="font-cormorant text-xl font-bold text-glamDarkBrown mb-4">Event Information</h3>
               <div className="space-y-4">
                 <div>
-                  <label className="text-sm font-medium text-gray-500">Date & Time</label>
-                  <p className="text-gray-900">{formatDate(event.date)}</p>
+                  <label className="text-sm font-medium text-glamDarkBrown/60">Date & Time</label>
+                  <p className="font-cormorant text-glamDarkBrown">{formatDate(event.date)}</p>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-500">Location</label>
-                  <p className="text-gray-900">{event.location}</p>
+                  <label className="text-sm font-medium text-glamDarkBrown/60">Location</label>
+                  <p className="font-cormorant text-glamDarkBrown">{event.location}</p>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-500">Category</label>
-                  <p className="text-gray-900">{event.category}</p>
+                  <label className="text-sm font-medium text-glamDarkBrown/60">Category</label>
+                  <p className="font-cormorant text-glamDarkBrown">{event.category}</p>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-500">Status</label>
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                  <label className="text-sm font-medium text-glamDarkBrown/60">Status</label>
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-glamGold/10 text-glamGold border border-glamGold/20">
                     Upcoming
                   </span>
                 </div>
@@ -325,15 +333,15 @@ const UpcomingEvent = () => {
 
             {/* Organizer Info */}
             {event.createdBy && (
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Organizer</h3>
+              <div className="bg-glamWhite rounded-xl shadow-lg p-6 border border-glamGold/20">
+                <h3 className="font-cormorant text-xl font-bold text-glamDarkBrown mb-4">Organizer</h3>
                 <div className="flex items-center">
                   <div className="w-10 h-10 bg-glamGold rounded-full flex items-center justify-center">
                     <FontAwesomeIcon icon={faUsers} className="text-glamDarkBrown" />
                   </div>
                   <div className="ml-3">
-                    <p className="font-medium text-gray-900">{event.createdBy.name}</p>
-                    <p className="text-sm text-gray-500">Event Organizer</p>
+                    <p className="font-cormorant font-medium text-glamDarkBrown">{event.createdBy.name}</p>
+                    <p className="font-cormorant text-sm text-glamDarkBrown/60">Event Organizer</p>
                   </div>
                 </div>
               </div>

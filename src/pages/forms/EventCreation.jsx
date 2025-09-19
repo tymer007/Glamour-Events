@@ -76,7 +76,7 @@ const EventCreation = () => {
     const result = await createEvent(eventData, accessToken);
     
     if (result.success) {
-      navigate('/events', { 
+      navigate(`/events/${result.data._id}`, { 
         state: { message: 'Event created successfully!' } 
       });
     }
