@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import EventCard from '../components/EventCard.jsx';
+import UserMenu from '../components/UserMenu.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faBars,
@@ -108,13 +109,16 @@ const GlamourHomepage = () => {
                             <button onClick={() => scrollToSection('contact')} className="font-cormorant text-glamDarkBrown hover:text-glamGold transition-colors">Contact</button>
                         </div>
 
-                        {/* Desktop Book Event Button */}
-                        <button
-                            onClick={() => scrollToSection('contact')}
-                            className="hidden md:block bg-glamGold hover:bg-glamCreamDark text-glamDarkBrown font-cormorant font-semibold px-6 py-2 rounded-full transition-colors"
-                        >
-                            Book Event
-                        </button>
+                        {/* Desktop Right Side - Book Event Button and User Menu */}
+                        <div className="hidden md:flex items-center space-x-4">
+                            <button
+                                onClick={() => scrollToSection('contact')}
+                                className="bg-glamGold hover:bg-glamCreamDark text-glamDarkBrown font-cormorant font-semibold px-6 py-2 rounded-full transition-colors"
+                            >
+                                Book Event
+                            </button>
+                            <UserMenu />
+                        </div>
 
                         {/* Mobile Menu Button */}
                         <button
@@ -140,6 +144,9 @@ const GlamourHomepage = () => {
                                 >
                                     Book Event
                                 </button>
+                                <div className="mt-4 pt-4 border-t border-glamGold/20">
+                                    <UserMenu />
+                                </div>
                             </div>
                         </div>
                     )}

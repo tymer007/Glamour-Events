@@ -8,7 +8,8 @@ import {
   faTimes,
   faCalendarAlt,
   faMapMarkerAlt,
-  faTag
+  faTag,
+  faUser
 } from '@fortawesome/free-solid-svg-icons';
 import useAuthStore from '../../store/authStore';
 import useEventStore from '../../store/eventStore';
@@ -26,7 +27,7 @@ const EventCreation = () => {
   const [bannerFile, setBannerFile] = useState(null);
   const [bannerPreview, setBannerPreview] = useState(null);
   
-  const { user, isAuthenticated } = useAuthStore();
+  const { user, accessToken, isAuthenticated } = useAuthStore();
   const { createEvent, isLoading, error, clearError } = useEventStore();
 
   // Redirect if not authenticated
@@ -72,7 +73,7 @@ const EventCreation = () => {
       banner: bannerFile
     };
 
-    const result = await createEvent(eventData, user.accessToken);
+    const result = await createEvent(eventData, accessToken);
     
     if (result.success) {
       navigate('/events', { 
@@ -81,7 +82,7 @@ const EventCreation = () => {
     }
   };
 
-  if (!isAuthenticated || !user) {
+  if (!isAuthenticated || !user || !accessToken) {
     return null; // Will redirect in useEffect
   }
 

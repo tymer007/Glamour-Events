@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { toast } from '../utils/toast';
 
 // API Base URL
 const API_BASE_URL = 'https://glamour-events-sever.onrender.com/api';
@@ -69,13 +70,16 @@ const useEventStore = create((set, get) => ({
 
       if (response.ok) {
         set({ isLoading: false, error: null });
+        toast.success('Event created successfully!');
         return { success: true, data };
       } else {
         set({ error: data.message || 'Failed to create event', isLoading: false });
+        toast.error(data.message || 'Failed to create event');
         return { success: false, error: data.message || 'Failed to create event' };
       }
     } catch (error) {
       set({ error: 'Network error. Please try again.', isLoading: false });
+      toast.error('Network error. Please try again.');
       return { success: false, error: 'Network error. Please try again.' };
     }
   },

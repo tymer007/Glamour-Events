@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { toast } from '../utils/toast';
 
 // API Base URL - Update this to match your server
 const API_BASE_URL = 'https://glamour-events-sever.onrender.com/api';
@@ -65,21 +66,43 @@ const useFeedbackStore = create((set, get) => ({
   createReview: async (eventId, reviewData) => {
     set({ isLoading: true, error: null });
     
-    const { rating, comment, photos, isAnonymous, anonymousName } = reviewData;
+    const { 
+      ratings, 
+      comments, 
+      recommendation, 
+      photos, 
+      isAnonymous, 
+      anonymousName,
+      demographics,
+      isPublic = true
+    } = reviewData;
     
-    if (!rating || rating < 1 || rating > 5) {
-      set({ error: 'Rating must be between 1 and 5', isLoading: false });
-      return { success: false, error: 'Rating must be between 1 and 5' };
+    if (!ratings?.overall || ratings.overall < 1 || ratings.overall > 5) {
+      set({ error: 'Overall rating must be between 1 and 5', isLoading: false });
+      return { success: false, error: 'Overall rating must be between 1 and 5' };
+    }
+
+    if (recommendation === undefined) {
+      set({ error: 'Recommendation is required', isLoading: false });
+      return { success: false, error: 'Recommendation is required' };
+    }
+
+    if (isAnonymous && !anonymousName) {
+      set({ error: 'Anonymous name is required when submitting anonymously', isLoading: false });
+      return { success: false, error: 'Anonymous name is required when submitting anonymously' };
     }
 
     const result = await apiRequest(`/events/${eventId}/feedback`, {
       method: 'POST',
       body: JSON.stringify({
-        rating,
-        comment,
+        ratings,
+        comments,
+        recommendation: Boolean(recommendation),
         photos: photos || [],
         isAnonymous: Boolean(isAnonymous),
         anonymousName: isAnonymous ? (anonymousName || 'Anonymous') : undefined,
+        demographics,
+        isPublic: Boolean(isPublic),
       }),
     });
 
@@ -91,9 +114,11 @@ const useFeedbackStore = create((set, get) => ({
         isLoading: false, 
         error: null 
       });
+      toast.success('Review submitted successfully!');
       return { success: true, data: result.data };
     } else {
       set({ error: result.error, isLoading: false });
+      toast.error(result.error);
       return { success: false, error: result.error };
     }
   },
@@ -102,20 +127,29 @@ const useFeedbackStore = create((set, get) => ({
   updateReview: async (reviewId, updateData) => {
     set({ isLoading: true, error: null });
     
-    const { rating, comment, photos, isPublic } = updateData;
+    const { 
+      ratings, 
+      reviews, 
+      recommendation, 
+      photos, 
+      isPublic,
+      demographics 
+    } = updateData;
     
-    if (rating && (rating < 1 || rating > 5)) {
-      set({ error: 'Rating must be between 1 and 5', isLoading: false });
-      return { success: false, error: 'Rating must be between 1 and 5' };
+    if (ratings?.overall && (ratings.overall < 1 || ratings.overall > 5)) {
+      set({ error: 'Overall rating must be between 1 and 5', isLoading: false });
+      return { success: false, error: 'Overall rating must be between 1 and 5' };
     }
 
     const result = await apiRequest(`/feedback/${reviewId}`, {
       method: 'PATCH',
       body: JSON.stringify({
-        rating,
-        comment,
+        ratings,
+        reviews,
+        recommendation,
         photos: photos || [],
         isPublic,
+        demographics,
       }),
     });
 
@@ -130,9 +164,11 @@ const useFeedbackStore = create((set, get) => ({
         isLoading: false, 
         error: null 
       });
+      toast.success('Review updated successfully!');
       return { success: true, data: result.data };
     } else {
       set({ error: result.error, isLoading: false });
+      toast.error(result.error);
       return { success: false, error: result.error };
     }
   },
@@ -154,9 +190,11 @@ const useFeedbackStore = create((set, get) => ({
         isLoading: false, 
         error: null 
       });
+      toast.success('Review deleted successfully!');
       return { success: true, data: result.data };
     } else {
       set({ error: result.error, isLoading: false });
+      toast.error(result.error);
       return { success: false, error: result.error };
     }
   },
@@ -186,9 +224,11 @@ const useFeedbackStore = create((set, get) => ({
         isLoading: false, 
         error: null 
       });
+      toast.success('Reply added successfully!');
       return { success: true, data: result.data };
     } else {
       set({ error: result.error, isLoading: false });
+      toast.error(result.error);
       return { success: false, error: result.error };
     }
   },
