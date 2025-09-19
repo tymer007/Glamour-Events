@@ -153,17 +153,27 @@ const AdminDashboard = () => {
         return;
       }
 
+      // Check if user is admin
+      if (user?.role !== 'admin') {
+        setError('Access denied. Admin privileges required.');
+        return;
+      }
+
+      console.log('Fetching admin data...', { accessToken: !!accessToken, userRole: user?.role });
       const result = await getAdminData(accessToken);
+      console.log('Admin data result:', result);
+      
       if (result.success) {
         setAdminData(result.data);
         setError(null);
       } else {
+        console.error('Admin data error:', result.error);
         setError(result.error);
       }
     };
 
     fetchAdminData();
-  }, [isAuthenticated, accessToken, navigate, getAdminData]);
+  }, [isAuthenticated, accessToken, navigate, getAdminData, user?.role]);
 
   if (!isAuthenticated) {
     return (

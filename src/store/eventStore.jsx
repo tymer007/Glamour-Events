@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { toast } from '../utils/toast';
 
 // API Base URL
+
 const API_BASE_URL = 'https://glamour-events-sever.onrender.com/api';
 
 // Helper function to make API requests
