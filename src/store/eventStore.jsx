@@ -33,6 +33,8 @@ const apiRequest = async (endpoint, options = {}) => {
 const useEventStore = create((set, get) => ({
   // State
   events: [],
+  upcomingEvents: [],
+  pastEvents: [],
   currentEvent: null,
   isLoading: false,
   error: null,
@@ -181,6 +183,44 @@ const useEventStore = create((set, get) => ({
     } catch (error) {
       set({ error: 'Network error. Please try again.', isLoading: false });
       return { success: false, error: 'Network error. Please try again.' };
+    }
+  },
+
+  // Get Upcoming Events
+  getUpcomingEvents: async (filters = {}) => {
+    set({ isLoading: true, error: null });
+
+    const queryParams = new URLSearchParams();
+    if (filters.category) queryParams.append('category', filters.category);
+    if (filters.limit) queryParams.append('limit', filters.limit);
+
+    const result = await apiRequest(`/events/upcoming?${queryParams.toString()}`);
+
+    if (result.success) {
+      set({ upcomingEvents: result.data.data, isLoading: false, error: null });
+      return { success: true, data: result.data.data };
+    } else {
+      set({ error: result.error, isLoading: false });
+      return { success: false, error: result.error };
+    }
+  },
+
+  // Get Past Events
+  getPastEvents: async (filters = {}) => {
+    set({ isLoading: true, error: null });
+
+    const queryParams = new URLSearchParams();
+    if (filters.category) queryParams.append('category', filters.category);
+    if (filters.limit) queryParams.append('limit', filters.limit);
+
+    const result = await apiRequest(`/events/past?${queryParams.toString()}`);
+
+    if (result.success) {
+      set({ pastEvents: result.data.data, isLoading: false, error: null });
+      return { success: true, data: result.data.data };
+    } else {
+      set({ error: result.error, isLoading: false });
+      return { success: false, error: result.error };
     }
   },
 

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import EventCard from '../components/EventCard.jsx';
+import React, { useState, useEffect } from 'react';
+import { EventsList } from '../components/EventCard.jsx';
 import UserMenu from '../components/UserMenu.jsx';
+import useEventStore from '../store/eventStore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faBars,
@@ -21,57 +22,19 @@ import {
 // Main Homepage Component
 const GlamourHomepage = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const { 
+        upcomingEvents, 
+        pastEvents, 
+        getUpcomingEvents, 
+        getPastEvents, 
+        isLoading 
+    } = useEventStore();
 
-    const upcomingEvents = [
-        {
-            title: "Gala Night",
-            description: "An exquisite evening of fine dining and entertainment in our grand ballroom.",
-            date: "December 15, 2025",
-            location: "Grand Ballroom",
-            image: "/api/placeholder/400/300" // Replace with: Elegant ballroom setup with chandeliers and round tables
-        },
-        {
-            title: "Wedding Showcase",
-            description: "Explore the latest wedding trends and meet top vendors in our beautiful gardens.",
-            date: "January 20, 2026",
-            location: "Garden Pavilion",
-            image: "/api/placeholder/400/300" // Replace with: Wedding ceremony setup with floral arch
-        },
-        {
-            title: "Cocktail Party",
-            description: "Join us for a sophisticated night of cocktails, networking, and live entertainment.",
-            date: "February 14, 2026",
-            location: "Rooftop Lounge",
-            image: "/api/placeholder/400/300" // Replace with: Cocktail party setup with bar and ambient lighting
-        }
-    ];
-
-    const pastEvents = [
-        {
-            title: "Corporate Gala",
-            description: "A successful corporate networking event with premium dining and entertainment.",
-            rating: "4.3",
-            image: "/api/placeholder/400/300" // Replace with: Corporate event with formal dining setup
-        },
-        {
-            title: "Music Concert",
-            description: "An unforgettable musical experience featuring local and international artists.",
-            rating: "4.7",
-            image: "/api/placeholder/400/300" // Replace with: Concert stage with lights and crowd silhouettes
-        },
-        {
-            title: "Wine Tasting",
-            description: "An elegant evening of fine wines paired with gourmet cuisine.",
-            rating: "4.6",
-            image: "/api/placeholder/400/300" // Replace with: Wine glasses and tasting setup
-        },
-        {
-            title: "Anniversary Celebration",
-            description: "A memorable anniversary celebration with dancing and dining.",
-            rating: "4.5",
-            image: "/api/placeholder/400/300" // Replace with: Celebration setup with elegant table arrangements
-        }
-    ];
+    // Load events on component mount
+    useEffect(() => {
+        getUpcomingEvents();
+        getPastEvents();
+    }, []);
 
     const scrollToSection = (sectionId) => {
         const element = document.getElementById(sectionId);
@@ -79,6 +42,11 @@ const GlamourHomepage = () => {
             element.scrollIntoView({ behavior: 'smooth' });
         }
         setMobileMenuOpen(false);
+    };
+
+    const handleEventClick = (eventId) => {
+        // Navigate to event details page
+        window.location.href = `/events/${eventId}`;
     };
 
     const handleContactSubmit = () => {
@@ -193,20 +161,20 @@ const GlamourHomepage = () => {
                         </p>
                     </div>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {upcomingEvents.map((event, index) => (
-                            <EventCard
-                                key={`upcoming-${index}`}
-                                title={event.title}
-                                description={event.description}
-                                date={event.date}
-                                location={event.location}
-                                image={event.image}
-                                isUpcoming={true}
-                                onButtonClick={() => scrollToSection('contact')}
-                            />
-                        ))}
-                    </div>
+                    {isLoading ? (
+                        <div className="flex justify-center items-center py-12">
+                            <div className="text-center">
+                                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-glamGold mx-auto mb-4"></div>
+                                <p className="font-cormorant text-glamDarkBrown/60">Loading events...</p>
+                            </div>
+                        </div>
+                    ) : (
+                        <EventsList 
+                            events={upcomingEvents}
+                            isUpcoming={true}
+                            onEventClick={handleEventClick}
+                        />
+                    )}
                 </div>
             </section>
 
@@ -220,19 +188,20 @@ const GlamourHomepage = () => {
                         </p>
                     </div>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {pastEvents.map((event, index) => (
-                            <EventCard
-                                key={`past-${index}`}
-                                title={event.title}
-                                description={event.description}
-                                image={event.image}
-                                rating={event.rating}
-                                isUpcoming={false}
-                                onButtonClick={() => scrollToSection('contact')}
-                            />
-                        ))}
-                    </div>
+                    {isLoading ? (
+                        <div className="flex justify-center items-center py-12">
+                            <div className="text-center">
+                                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-glamGold mx-auto mb-4"></div>
+                                <p className="font-cormorant text-glamDarkBrown/60">Loading events...</p>
+                            </div>
+                        </div>
+                    ) : (
+                        <EventsList 
+                            events={pastEvents}
+                            isUpcoming={false}
+                            onEventClick={handleEventClick}
+                        />
+                    )}
                 </div>
             </section>
 
